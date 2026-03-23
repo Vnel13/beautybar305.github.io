@@ -115,19 +115,35 @@
             .service-img { min-height: 300px; }
             .service-text { padding: 40px 30px; }
         }
+@media (max-width: 992px) {
+    .menu-toggle { display: block; }
+    .nav-links { 
+        display: none; 
+        position: absolute; 
+        top: 100%; left: 0; 
+        width: 100%; 
+        background: var(--glass); 
+        flex-direction: column; 
+        padding: 20px; 
+        border-bottom: 1px solid #eee;
+        text-align: center;
+    }
+    .nav-links.active { display: flex; }
+    .nav-links a { margin: 15px 0; font-size: 0.9rem; margin-left: 0; }
+}
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo">BeautyBar305</a>
-        <div class="nav-links">
-            <a href="services.html" class="active-link">Services</a>
-            <a href="gallery.html">Gallery</a>
-            <a href="about.html">About Me</a>
-            <a href="index.html">Book Now</a>
-        </div>
-    </nav>
+    <a href="index.html" class="logo">BeautyBar305</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+        <a href="services.html">Services</a>
+        <a href="gallery.html" class="active-link">Gallery</a> <a href="about.html">About Me</a>
+        <a href="index.html">Book Now</a>
+    </div>
+</nav>
 
     <section class="page-header">
         <div data-aos="fade-down">
@@ -181,6 +197,9 @@
     <footer>&copy; 2026 BeautyBar305 by Miel Simone.</footer>
 
     <script>
+function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+}
         AOS.init({ duration: 1000, once: true });
     </script>
 </body>
