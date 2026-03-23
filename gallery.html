@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | BeautyBar305</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        :root {
+            --soft-pink: #FFD1DC;
+            --deep-pink: #F48FB1;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fff;
+            color: #4a4a4a;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(244, 143, 177, 0.1);
+        }
+
+        .logo { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--deep-pink); text-decoration: none; }
+        .nav-links a { text-decoration: none; color: #666; margin-left: 40px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--deep-pink); }
+        .nav-links a.active-link { color: var(--deep-pink); font-weight: 700; }
+
+        .container { max-width: 1200px; margin: 120px auto 60px; padding: 0 20px; }
+        
+        .gallery-title { text-align: center; font-family: 'Great Vibes', cursive; font-size: 5rem; color: var(--deep-pink); margin-bottom: 40px; }
+        
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .gallery-item { 
+            height: 450px; 
+            border-radius: 30px; 
+            overflow: hidden; 
+            background: #f9f9f9; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover { transform: scale(1.02); }
+
+        .gallery-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        footer { text-align: center; padding: 60px 40px; font-size: 0.7rem; color: #aaa; letter-spacing: 1px; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .gallery-title { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">BeautyBar305</a>
+        <div class="nav-links">
+            <a href="services.html">Services</a>
+            <a href="gallery.html" class="active-link">Gallery</a>
+            <a href="about.html">About Me</a>
+            <a href="index.html">Book Now</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="gallery-title" data-aos="fade-down">Recent Artistry</h1>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100"><img src="IMG_8062.jpeg" alt="Luxury Hair"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="IMG_6009.jpeg" alt="Loc Artistry"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300"><img src="IMG_5809.jpeg" alt="Blonde Hair Detail"></div>
+            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400"><img src="IMG_8209.jpeg" alt="Loc Texture Detail"></div>
+            </div>
+    </div>
+
+    <footer>&copy; 2026 BeautyBar305 by Miel Simone.</footer>
+
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeautyBar305 | Miel Simone Luxury Booking</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        :root {
+            --soft-pink: #FFD1DC;
+            --deep-pink: #F48FB1;
+            --glass: rgba(255, 255, 255, 0.85);
+            --bg: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fff;
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
+
+        /* --- Standardized Luxury Navigation --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(244, 143, 177, 0.1);
+        }
+
+        .logo { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--deep-pink); text-decoration: none; }
+        .nav-links a { text-decoration: none; color: #666; margin-left: 40px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--deep-pink); }
+        .nav-links a.active-link { color: var(--deep-pink); font-weight: 700; }
+
+        /* --- Hero with Video Background --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3); /* Softened overlay to keep text readable */
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #d8819d; }
+        .hero p { letter-spacing: 8px; text-transform: uppercase; opacity: 0.8; font-size: 1rem; color: #4a4a4a; }
+
+        /* --- Booking Grid --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            background: white;
+            padding: 60px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            border: 1px solid #fff0f3;
+        }
+
+        .service-card {
+            background: #fffafa;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: 0.4s;
+            border: 1px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .service-card:hover { transform: translateX(10px); border-color: var(--deep-pink); }
+        .service-card.active { border-color: var(--deep-pink); background: white; box-shadow: 0 10px 20px rgba(244,143,177,0.1); }
+
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+        .cal-day { padding: 15px; background: #fafafa; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .cal-day.selected { background: var(--deep-pink); color: white; }
+
+        input, textarea, select { width: 100%; padding: 18px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 15px; font-family: inherit; }
+
+        .btn {
+            background: var(--deep-pink);
+            color: white; border: none; padding: 22px; border-radius: 50px;
+            width: 100%; font-weight: 600; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .terms-container { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 15px; 
+            margin: 30px 0; 
+            background: #fffafa;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #fff0f3;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrapper input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            height: 24px;
+            width: 24px;
+            background-color: #fff;
+            border: 2px solid var(--soft-pink);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .checkbox-wrapper:hover input ~ .checkmark {
+            border-color: var(--deep-pink);
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark {
+            background-color: var(--deep-pink);
+            border-color: var(--deep-pink);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid white;
+            border-width: 0 2.5px 2.5px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-wrapper input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .terms-text { 
+            font-size: 0.85rem; 
+            color: #666; 
+            line-height: 1.5; 
+            cursor: pointer;
+            user-select: none;
+        }
+
+        footer { text-align: center; padding: 40px; font-size: 0.7rem; color: #aaa; letter-spacing: 1px; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .booking-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body> 
+
+    <nav>
+        <a href="index.html" class="logo">BeautyBar305</a>
+        <div class="nav-links">
+            <a href="services.html">Services</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="about.html">About Me</a>
+            <a href="index.html" class="active-link">Book Now</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src= BeautyBar.mp4 type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
+            <h1>Miel Simone</h1>
+            <p>Luxury Hair Artistry • Miami, FL</p>
+        </div>
+    </section>
+
+    <div class="container" id="booking">
+        <div class="booking-grid" data-aos="fade-up">
+            
+            <div class="left-panel">
+                <span style="font-size: 0.7rem; font-weight: 700; color: var(--deep-pink); letter-spacing: 2px;">01. SELECT SERVICE</span>
+                <div style="margin-top: 20px;">
+                    <div class="service-card" onclick="selectService('Wig Frontal Install', '$65', this)">
+                        <div>Wig Frontal Install</div><div style="color:var(--deep-pink)">$65</div>
+                    </div>
+                    <div class="service-card" onclick="selectService('Loc Retwist', '$50', this)">
+                        <div>Loc Retwist</div><div style="color:var(--deep-pink)">$50</div>
+                    </div>
+                    <div class="service-card" onclick="selectService('Closure Install', '$35', this)">
+                        <div>Closure Install</div><div style="color:var(--deep-pink)">$35</div>
+                    </div>
+                </div>
+
+                <div style="background: #fff5f7; padding: 25px; border-radius: 20px; border: 2px dashed var(--deep-pink); text-align: center; margin: 20px 0;">
+                    <strong style="color: var(--deep-pink);">Deposit Required: $10.00</strong><br>
+                    <a href="https://cash.app/$mielsimonee" target="_blank" style="color: var(--deep-pink); font-size: 0.8rem; text-decoration: none; font-weight: 700;">Pay via CashApp →</a>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <form action="https://api.web3forms.com/submit" method="POST" id="bookingForm">
+                    <input type="hidden" name="access_key" value="06cebaa1-5c4e-4b36-a36d-e3d1b264e4fe">
+                    
+                    <span style="font-size: 0.7rem; font-weight: 700; color: var(--deep-pink); letter-spacing: 2px;">02. PICK DATE & TIME</span>
+                    
+                    <div class="calendar-header" style="margin-top:20px;">
+                        <button type="button" onclick="moveMonth(-1)" style="border:none; background:none; cursor:pointer;">❮</button>
+                        <h3 id="monthYear" style="font-size: 0.9rem; letter-spacing: 2px;"></h3>
+                        <button type="button" onclick="moveMonth(1)" style="border:none; background:none; cursor:pointer;">❯</button>
+                    </div>
+                    <div class="calendar-grid" id="calendar"></div>
+
+                    <select name="time" id="timeSelect" required style="margin-top:20px;">
+                        <option value="" disabled selected>Select a time slot...</option>
+                        <option value="08:00 AM">08:00 AM</option>
+                        <option value="08:30 AM">08:30 AM</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="09:30 AM">09:30 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="10:30 AM">10:30 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="11:30 AM">11:30 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="12:30 PM">12:30 PM</option>
+                        <option value="01:00 PM">01:00 PM</option>
+                        <option value="01:30 PM">01:30 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="02:30 PM">02:30 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="03:30 PM">03:30 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                        <option value="04:30 PM">04:30 PM</option>
+                        <option value="05:00 PM">05:00 PM</option>
+                        <option value="05:30 PM">05:30 PM</option>
+                        <option value="06:00 PM">06:00 PM</option>
+                        <option value="06:30 PM">06:30 PM</option>
+                        <option value="07:00 PM">07:00 PM</option>
+                        <option value="07:30 PM">07:30 PM</option>
+                        <option value="08:00 PM">08:00 PM</option>
+                        <option value="08:30 PM">08:30 PM</option>
+                        <option value="09:00 PM">09:00 PM</option>
+                        <option value="09:30 PM">09:30 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
+                        <option value="10:30 PM">10:30 PM</option>
+                        <option value="11:00 PM">11:00 PM</option>
+                        <option value="11:30 PM">11:30 PM</option>
+                        <option value="12:00 AM">12:00 AM</option>
+                    </select>
+
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                    <textarea name="message" rows="3" placeholder="Notes for Miel Simone..."></textarea>
+
+                    <input type="hidden" name="service" id="hiddenService">
+                    <input type="hidden" name="date" id="hiddenDate">
+
+                <div class="terms-container">
+    <label class="checkbox-wrapper">
+        <input type="checkbox" id="terms" name="terms_agreement" required>
+        <span class="checkmark"></span>
+    </label>
+    <label for="terms" class="terms-text">
+        I have read and agree to the 
+        <a href="policy.html" target="_blank" style="color: var(--deep-pink); font-weight:600;">Salon Policies</a>. 
+        I understand that a <strong>$10.00 non-refundable deposit</strong> is required to secure my appointment.
+    </label>
+</div>
+                    <button type="submit" class="btn">Confirm Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 BeautyBar305 by Miel Simone.</footer>
+
+    <script>
+        AOS.init();
+        let viewDate = new Date();
+        function renderCalendar() {
+            const cal = document.getElementById('calendar'); cal.innerHTML = '';
+            const m = viewDate.getMonth(), y = viewDate.getFullYear();
+            document.getElementById('monthYear').innerText = viewDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+            const days = new Date(y, m + 1, 0).getDate();
+            for(let i=1; i<=days; i++) {
+                let d = document.createElement('div'); d.className = 'cal-day'; d.innerText = i;
+                d.onclick = () => {
+                    document.querySelectorAll('.cal-day').forEach(el => el.classList.remove('selected'));
+                    d.classList.add('selected');
+                    document.getElementById('hiddenDate').value = `${m+1}/${i}/${y}`;
+                };
+                cal.appendChild(d);
+            }
+        }
+        function moveMonth(dir) { viewDate.setMonth(viewDate.getMonth() + dir); renderCalendar(); }
+        function selectService(name, price, el) {
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('hiddenService').value = name;
+        }
+        renderCalendar();
+    </script>
+</body>
+</html>
