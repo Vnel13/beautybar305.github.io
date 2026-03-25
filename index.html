@@ -67,13 +67,7 @@
         }
 
         .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3); /* Softened overlay to keep text readable */
-            z-index: 0;
+            display: none;
         }
 
         .hero-content {
@@ -81,8 +75,19 @@
             z-index: 1;
         }
 
-        .hero h1 { font-family: 'Great Vibes', cursive; font-size: 7rem; color: #d8819d; }
-        .hero p { letter-spacing: 8px; text-transform: uppercase; opacity: 0.8; font-size: 1rem; color: #4a4a4a; }
+        .hero h1 { 
+            font-family: 'Great Vibes', cursive; 
+            font-size: 7rem; 
+            color: #fff; 
+            text-shadow: 0 2px 30px rgba(0,0,0,0.35), 0 0 80px rgba(244,143,177,0.4);
+        }
+        .hero p { 
+            letter-spacing: 8px; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
+            color: rgba(255,255,255,0.92);
+            text-shadow: 0 1px 12px rgba(0,0,0,0.4);
+        }
 
         /* --- Booking Grid --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
@@ -125,6 +130,12 @@
             color: white; border: none; padding: 22px; border-radius: 50px;
             width: 100%; font-weight: 600; cursor: pointer; transition: 0.3s;
             text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 8px 25px rgba(244,143,177,0.4);
+        }
+        .btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 14px 35px rgba(244,143,177,0.5);
+            background: #e87da6;
         }
 
         .terms-container { 
@@ -198,7 +209,15 @@
             user-select: none;
         }
 
-        footer { text-align: center; padding: 40px; font-size: 0.7rem; color: #aaa; letter-spacing: 1px; text-transform: uppercase; }
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            font-size: 0.7rem; 
+            color: #bbb; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+            border-top: 1px solid #fff0f3;
+        }
 
         @media (max-width: 900px) {
             nav { padding: 20px; flex-direction: column; gap: 15px; }
@@ -250,7 +269,7 @@
         <a href="services.html">Services</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About Me</a>
-        <a href="index.html" class="active-link">Book Now</a>
+        <a href="index.html">Book Now</a>
     </div>
 </nav>
 
@@ -368,9 +387,19 @@
 
     <script>
 function toggleMenu() {
-    // This finds your nav-links and adds/removes the 'active' class
     document.getElementById('navLinks').classList.toggle('active');
 }
+
+// Auto-highlight the correct nav link based on current page
+(function() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+            link.classList.add('active-link');
+        }
+    });
+})();
         AOS.init();
         let viewDate = new Date();
         function renderCalendar() {
