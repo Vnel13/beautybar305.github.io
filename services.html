@@ -108,15 +108,10 @@
         .book-btn:hover { background: #d8819d; transform: translateY(-3px); }
 
         footer { text-align: center; padding: 40px; font-size: 0.7rem; color: #aaa; letter-spacing: 1px; text-transform: uppercase; }
-
-        @media (max-width: 900px) {
-            nav { padding: 20px; flex-direction: column; gap: 15px; }
             .service-row { flex-direction: column; }
             .service-img { min-height: 300px; }
             .service-text { padding: 40px 30px; }
         }
-@media (max-width: 992px) {
-    .menu-toggle { display: block; }
     .nav-links { 
         display: none; 
         position: absolute; 
@@ -131,13 +126,49 @@
     .nav-links.active { display: flex; }
     .nav-links a { margin: 15px 0; font-size: 0.9rem; margin-left: 0; }
 }
+
+        /* --- MOBILE --- */
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; background: none; border: none; color: #4a4a4a; }
+
+        @media (max-width: 992px) {
+            nav { padding: 18px 20px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0;
+                width: 100%;
+                background: var(--glass);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 20px;
+                border-bottom: 1px solid #eee;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { margin: 15px 0; font-size: 0.9rem; margin-left: 0; }
+            .service-row { flex-direction: column !important; }
+            .service-img { min-height: 260px; }
+            .service-text { padding: 30px 25px; }
+            .page-header h1 { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .page-header { padding: 140px 15px 40px; }
+            .page-header h1 { font-size: 2.8rem; }
+            .content { padding: 20px 12px 60px; }
+            .service-img { min-height: 220px; }
+            .service-text { padding: 25px 18px; }
+            .book-btn { width: 100%; text-align: center; display: block; }
+        }
+
     </style>
 </head>
 <body>
 
     <nav>
     <a href="index.html" class="logo">BeautyBar305</a>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <div class="nav-links" id="navLinks">
         <a href="services.html">Services</a>
         <a href="gallery.html">Gallery</a>
@@ -202,9 +233,12 @@ function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('active');
 }
 (function() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        if (link.getAttribute('href') === currentPage) link.classList.add('active-link');
+    var path = window.location.pathname;
+    var file = path.substring(path.lastIndexOf('/') + 1);
+    if (!file || file === '') file = 'index.html';
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href === file) link.classList.add('active-link');
     });
 })();
         AOS.init({ duration: 1000, once: true });
