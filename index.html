@@ -58,10 +58,17 @@
 
         .time-slots { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:15px; }
         .time-slot { padding:11px 5px; background:#fafafa; border-radius:10px; text-align:center; cursor:pointer; transition:0.2s; font-size:0.75rem; border:1px solid transparent; }
-        .time-slot:hover { border-color:var(--deep-pink); background:#fff0f3; }
+        .time-slot:hover:not(.past-time) { border-color:var(--deep-pink); background:#fff0f3; }
         .time-slot.selected { background:var(--deep-pink); color:white; border-color:var(--deep-pink); }
-        .time-slot.booked { background:#f5f5f5; color:#ccc; cursor:not-allowed; text-decoration:line-through; font-size:0.7rem; }
-        .time-slot.pending-slot { background:#fff8e1; color:#e6a020; cursor:not-allowed; font-size:0.7rem; }
+        /* Past time slots — grayed out, not selectable */
+        .time-slot.past-time {
+            background:#f5f5f5;
+            color:#ccc;
+            cursor:not-allowed;
+            text-decoration:line-through;
+            opacity:0.5;
+            pointer-events:none;
+        }
 
         input[type=text], input[type=tel], input[type=email], textarea, select { width:100%; padding:16px 18px; border-radius:14px; border:1px solid #eee; margin-bottom:14px; font-family:inherit; font-size:0.88rem; outline:none; transition:border 0.2s; }
         input:focus, textarea:focus { border-color:var(--deep-pink); }
@@ -105,14 +112,6 @@
         .pay-link:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
         .pay-link.cashapp { background:#00C244; color:white; }
 
-        .upload-zone { border:2px dashed #e0e0e0; border-radius:20px; padding:35px 20px; text-align:center; cursor:pointer; transition:0.3s; margin-bottom:14px; background:#fafafa; }
-        .upload-zone:hover { border-color:var(--deep-pink); background:#fff5f8; }
-        .upload-zone.has-file { border-color:var(--deep-pink); background:#fff0f6; }
-        .upload-zone .upload-icon { font-size:2.2rem; margin-bottom:8px; }
-        .upload-zone p { color:#aaa; font-size:0.83rem; }
-        .upload-zone.has-file p { color:var(--deep-pink); font-weight:600; }
-        .upload-or { text-align:center; color:#ccc; font-size:0.78rem; margin:14px 0; letter-spacing:2px; }
-
         .policy-preview { background:#fafafa; border-radius:16px; padding:22px; margin:18px 0; max-height:180px; overflow-y:auto; font-size:0.8rem; line-height:1.8; color:#777; border:1px solid #eee; }
         .policy-preview h4 { font-size:0.78rem; font-weight:700; color:#444; margin:12px 0 4px; }
         .policy-preview h4:first-child { margin-top:0; }
@@ -121,9 +120,7 @@
         .success-icon { font-size:4rem; margin-bottom:16px; }
         .success-screen h2 { font-family:'Great Vibes',cursive; font-size:4rem; color:var(--deep-pink); margin-bottom:16px; }
         .success-screen p { color:#888; line-height:1.9; font-size:0.88rem; max-width:500px; margin:0 auto 12px; }
-        .pending-badge { display:inline-block; background:#fff3e0; color:#e6a020; padding:8px 22px; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
-
-        .warning-note { background:#fff3e0; border-left:4px solid #e6a020; padding:14px 18px; border-radius:0 12px 12px 0; margin:20px 0; font-size:0.8rem; color:#b37a00; line-height:1.6; }
+        .pending-badge { display:inline-block; background:#e8f5ee; color:#2e7d5a; padding:8px 22px; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
 
         footer { text-align:center; padding:40px; font-size:0.7rem; color:#bbb; letter-spacing:2px; text-transform:uppercase; border-top:1px solid #fff0f3; }
 
@@ -179,7 +176,7 @@
         <div class="step-divider"></div>
         <div class="step" id="step-ind-2"><span class="step-num">2</span><span>Your Info</span></div>
         <div class="step-divider"></div>
-        <div class="step" id="step-ind-3"><span class="step-num">3</span><span>Deposit</span></div>
+        <div class="step" id="step-ind-3"><span class="step-num">3</span><span>Pay & Submit</span></div>
         <div class="step-divider"></div>
         <div class="step" id="step-ind-4"><span class="step-num">4</span><span>Confirm</span></div>
     </div>
@@ -286,34 +283,19 @@
         </div>
     </div>
 
-    <!-- STEP 3: PAYMENT + PROOF -->
+    <!-- STEP 3: PAYMENT + SUBMIT -->
     <div class="booking-panel" id="panel-3">
         <div style="max-width:580px;margin:0 auto;">
             <div class="payment-box">
                 <h2>Send Your Deposit</h2>
                 <div class="deposit-amount">$10.00</div>
-                <p>Send your $10 deposit using one of the options below, then upload your screenshot or enter your transaction ID to complete the booking.</p>
+                <p>Send your $10 non-refundable deposit via Cash App to secure your appointment, then hit <strong>Submit Booking</strong> below.</p>
                 <div class="pay-links">
                     <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link cashapp">
                         💵 Cash App: $mielsimonee
                     </a>
                 </div>
-                <p style="font-size:0.75rem;color:#e87da6;font-weight:700;margin-top:5px;">⚠️ Your slot is NOT confirmed until your deposit is manually verified by Miel Simone.</p>
-            </div>
-
-            <span class="section-label">Upload Proof of Payment</span>
-            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('screenshotInput').click()">
-                <div class="upload-icon">📸</div>
-                <p>Tap to upload your payment screenshot</p>
-                <p style="font-size:0.73rem;margin-top:6px;color:#ccc;">JPG, PNG, HEIC accepted</p>
-            </div>
-            <input type="file" id="screenshotInput" accept="image/*" style="display:none" onchange="handleFileUpload(this)">
-
-            <div class="upload-or">— or enter transaction ID —</div>
-            <input type="text" id="transactionId" placeholder="Transaction ID / Reference # (optional)">
-
-            <div class="warning-note">
-                ⚠️ Your appointment is <strong>not confirmed</strong> until Miel Simone manually verifies your deposit. You will be contacted at the phone number or email you provided.
+                <p style="font-size:0.75rem;color:#e87da6;font-weight:700;margin-top:5px;">⚠️ Your appointment is not confirmed until Miel Simone verifies your deposit.</p>
             </div>
 
             <div class="btn-row">
@@ -327,10 +309,10 @@
     <div class="booking-panel" id="panel-4">
         <div class="success-screen">
             <div class="success-icon">🌸</div>
-            <div class="pending-badge">⏳ Pending Verification</div>
-            <h2>You're Almost There!</h2>
+            <div class="pending-badge">✅ Booking Submitted!</div>
+            <h2>You're All Set!</h2>
             <div class="summary-card" id="successSummary" style="max-width:460px;margin:0 auto 24px;text-align:left;"></div>
-            <p>Your request has been received! Miel Simone will review your deposit and reach out to <strong>confirm your appointment</strong>. Please keep an eye on your phone and email.</p>
+            <p>Your booking has been received! Please send your <strong>$10 deposit via Cash App to $mielsimonee</strong> if you haven't already. Miel Simone will reach out to confirm your appointment.</p>
             <a href="index.html" class="btn" style="display:inline-block;max-width:300px;margin-top:28px;text-decoration:none;text-align:center;">Book Another Appointment</a>
         </div>
     </div>
@@ -358,10 +340,6 @@ AOS.init({ duration:1000, once:true });
 
 // ── STATE ────────────────────────────────────────────────────
 let selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
-let uploadedFileData = null;
-
-// ── SLOT STORAGE (session-only, no localStorage needed) ──────
-function getSlotStatus(d, t) { return 'available'; } // slots managed via email confirmation
 
 // ── CALENDAR ─────────────────────────────────────────────────
 let viewDate = new Date();
@@ -414,11 +392,26 @@ const ALL_TIMES = [
     '06:00 PM','06:15 PM','06:30 PM','06:45 PM',
     '07:00 PM'
 ];
+
+/**
+ * Returns true if the given time string (e.g. "02:30 PM") on the given
+ * date string (e.g. "4/1/2026") is in the past relative to right now.
+ */
+function isTimePast(dateStr, timeStr) {
+    const [month, day, year] = dateStr.split('/').map(Number);
+    const [timePart, meridiem] = timeStr.split(' ');
+    let [hours, minutes] = timePart.split(':').map(Number);
+    if (meridiem === 'PM' && hours !== 12) hours += 12;
+    if (meridiem === 'AM' && hours === 12) hours = 0;
+    const slotDateTime = new Date(year, month - 1, day, hours, minutes, 0, 0);
+    return slotDateTime <= new Date(); // past or exactly now → block it
+}
+
 function renderTimeSlots() {
     const c = document.getElementById('timeSlots');
     c.innerHTML = '';
 
-    // Check if selected date is today — if so, block past times
+    // Determine if selected date is today
     const now = new Date();
     const [selMonth, selDay, selYear] = selectedDate.split('/').map(Number);
     const isToday = (
@@ -432,21 +425,10 @@ function renderTimeSlots() {
         el.className = 'time-slot';
         el.innerText = t;
 
-        // Parse slot time and compare to now if it's today
-        let isPast = false;
-        if (isToday) {
-            const [timePart, meridiem] = t.split(' ');
-            let [hours, minutes] = timePart.split(':').map(Number);
-            if (meridiem === 'PM' && hours !== 12) hours += 12;
-            if (meridiem === 'AM' && hours === 12) hours = 0;
-            const slotDate = new Date(selYear, selMonth - 1, selDay, hours, minutes);
-            isPast = slotDate <= now;
-        }
-
-        if (isPast) {
-            el.classList.add('booked');
+        // Only check if time is past when the selected date is today
+        if (isToday && isTimePast(selectedDate, t)) {
+            el.classList.add('past-time');
             el.title = 'This time has already passed';
-            el.innerText = t;
         } else {
             el.onclick = () => {
                 document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
@@ -455,6 +437,7 @@ function renderTimeSlots() {
             };
             if (selectedTime === t) el.classList.add('selected');
         }
+
         c.appendChild(el);
     });
 }
@@ -483,11 +466,6 @@ function goToStep2() {
     if (!selectedService) { alert('Please select a service.'); return; }
     if (!selectedDate)    { alert('Please select a date.'); return; }
     if (!selectedTime)    { alert('Please select a time slot.'); return; }
-    if (getSlotStatus(selectedDate, selectedTime) !== 'available') {
-        alert('That slot was just taken! Please choose another time.');
-        renderTimeSlots();
-        return;
-    }
     document.getElementById('step2Summary').innerHTML = `
         <h4>Your Selection</h4>
         <div class="summary-row"><span>Service</span><span>${selectedService}</span></div>
@@ -512,20 +490,14 @@ function goToStep3() {
 }
 
 function submitBooking() {
-    const txId = document.getElementById('transactionId').value.trim();
-    if (!uploadedFileData && !txId) {
-        alert('Please upload your payment screenshot or enter a Transaction ID to confirm your deposit.');
-        return;
-    }
-
     const bookingId = 'BB' + Date.now();
-    const name     = document.getElementById('clientName').value.trim();
-    const phone    = document.getElementById('clientPhone').value.trim();
-    const email    = document.getElementById('clientEmail').value.trim();
-    const notes    = document.getElementById('clientNotes').value.trim();
-    const now      = new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' });
+    const name  = document.getElementById('clientName').value.trim();
+    const phone = document.getElementById('clientPhone').value.trim();
+    const email = document.getElementById('clientEmail').value.trim();
+    const notes = document.getElementById('clientNotes').value.trim();
+    const now   = new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' });
 
-    // ── Send detailed email via Web3Forms ────────────────────
+    // ── Send email via Web3Forms ─────────────────────────────
     const formData = new FormData();
     formData.append('access_key', '06cebaa1-5c4e-4b36-a36d-e3d1b264e4fe');
     formData.append('subject', `🌸 New Booking – ${name} | ${selectedDate} at ${selectedTime}`);
@@ -559,19 +531,16 @@ function submitBooking() {
 ───────────────────────────────────
   Amount     : $10.00
   Method     : Cash App ($mielsimonee)
-  Reference  : ${txId || '(Screenshot uploaded by client)'}
 
 ───────────────────────────────────
   ACTION NEEDED
 ───────────────────────────────────
   1. Check your Cash App for the $10 deposit
-  2. Verify the reference above matches
-  3. Text or email the client to confirm:
+  2. Text or email the client to confirm:
      ${phone} | ${email}
 
 ═══════════════════════════════════
-  BeautyBar305 by Miel Simone
-  Miami, FL
+  BeautyBar305 by Miel Simone · Miami, FL
 ═══════════════════════════════════`
     );
     fetch('https://api.web3forms.com/submit', { method:'POST', body: formData }).catch(() => {});
@@ -581,23 +550,9 @@ function submitBooking() {
         <div class="summary-row"><span>Name</span><span>${name}</span></div>
         <div class="summary-row"><span>Service</span><span>${selectedService}</span></div>
         <div class="summary-row"><span>Date &amp; Time</span><span>${selectedDate} at ${selectedTime}</span></div>
-        <div class="summary-row"><span>Status</span><span style="color:#e6a020;">⏳ Pending Verification</span></div>
+        <div class="summary-row"><span>Deposit</span><span style="color:#4caf88;">$10 via Cash App</span></div>
     `;
     goToStep(4);
-}
-
-// ── FILE UPLOAD ──────────────────────────────────────────────
-function handleFileUpload(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        uploadedFileData = e.target.result;
-        const zone = document.getElementById('uploadZone');
-        zone.classList.add('has-file');
-        zone.innerHTML = `<div class="upload-icon">✅</div><p>${file.name}</p><p style="font-size:0.73rem;margin-top:5px;">Tap to change</p>`;
-    };
-    reader.readAsDataURL(file);
 }
 
 renderCalendar();
