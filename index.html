@@ -104,8 +104,6 @@
         .pay-link { display:inline-flex; align-items:center; gap:8px; padding:14px 24px; border-radius:50px; text-decoration:none; font-weight:700; font-size:0.78rem; letter-spacing:1px; transition:0.3s; }
         .pay-link:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
         .pay-link.cashapp { background:#00C244; color:white; }
-        .pay-link.applepay { background:#000; color:white; }
-        .pay-link.googlepay { background:#4285F4; color:white; }
 
         .upload-zone { border:2px dashed #e0e0e0; border-radius:20px; padding:35px 20px; text-align:center; cursor:pointer; transition:0.3s; margin-bottom:14px; background:#fafafa; }
         .upload-zone:hover { border-color:var(--deep-pink); background:#fff5f8; }
@@ -219,6 +217,13 @@
                     </div>
                     <div style="color:var(--deep-pink);font-weight:700;">$20</div>
                 </div>
+                <div class="service-card" onclick="selectService('Reinstall','$50',this)">
+                    <div>
+                        <div style="font-weight:600;">Reinstall</div>
+                        <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">Full removal & fresh install</div>
+                    </div>
+                    <div style="color:var(--deep-pink);font-weight:700;">$50</div>
+                </div>
                 <div class="deposit-reminder">
                     <strong>$10 Non-Refundable Deposit</strong>
                     <small>Required to hold your appointment slot</small>
@@ -240,11 +245,6 @@
                 <div id="timeSection" style="display:none;margin-top:28px;">
                     <span class="section-label">03. Pick a Time</span>
                     <div class="time-slots" id="timeSlots"></div>
-                    <div style="margin-top:8px;font-size:0.72rem;color:#ccc;">
-                        <span style="background:#fff8e1;padding:3px 8px;border-radius:20px;color:#e6a020;margin-right:8px;">⏳ Pending</span>
-                        <span style="background:#f5f5f5;padding:3px 8px;border-radius:20px;margin-right:8px;text-decoration:line-through;">Booked</span>
-                        <span style="background:var(--deep-pink);padding:3px 8px;border-radius:20px;color:white;">Selected</span>
-                    </div>
                 </div>
                 <button class="btn" style="margin-top:30px;" onclick="goToStep2()">Continue →</button>
             </div>
@@ -273,7 +273,7 @@
                 <h4>1. Non-Refundable Deposit</h4>
                 A $10 deposit is required to secure your appointment. It is non-refundable and applied toward your total cost. Your appointment is not confirmed until the deposit has been received and manually verified.
                 <h4>2. Appointment Confirmation</h4>
-                Submitting a booking request puts your time slot in "Pending" status. You will receive confirmation once your deposit proof has been reviewed. If payment is not received within 30 minutes, your slot will be released.
+                Submitting a booking request puts your time slot in "Pending" status. You will receive confirmation once your deposit has been reviewed by Miel Simone directly.
                 <h4>3. Rescheduling &amp; Cancellations</h4>
                 Reschedule at least 24 hours in advance to transfer your deposit. Cancellations made less than 24 hours before or no-shows forfeit the deposit.
                 <h4>4. Late Policy</h4>
@@ -297,12 +297,6 @@
                     <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link cashapp">
                         💵 Cash App: $mielsimonee
                     </a>
-                    <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link applepay">
-                        🍎 Apple Pay
-                    </a>
-                    <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link googlepay">
-                        🔵 Google Pay
-                    </a>
                 </div>
                 <p style="font-size:0.75rem;color:#e87da6;font-weight:700;margin-top:5px;">⚠️ Your slot is NOT confirmed until your deposit is manually verified by Miel Simone.</p>
             </div>
@@ -319,7 +313,7 @@
             <input type="text" id="transactionId" placeholder="Transaction ID / Reference # (optional)">
 
             <div class="warning-note">
-                ⏳ Once you submit, your selected time slot will be marked <strong>Pending</strong> and held for 30 minutes while your deposit is reviewed. If not verified in time, it will be released automatically.
+                ⚠️ Your appointment is <strong>not confirmed</strong> until Miel Simone manually verifies your deposit. You will be contacted at the phone number or email you provided.
             </div>
 
             <div class="btn-row">
@@ -336,8 +330,7 @@
             <div class="pending-badge">⏳ Pending Verification</div>
             <h2>You're Almost There!</h2>
             <div class="summary-card" id="successSummary" style="max-width:460px;margin:0 auto 24px;text-align:left;"></div>
-            <p>Your time slot is now <strong>reserved</strong> while Miel Simone reviews your deposit. You'll receive a message once your payment is verified — this typically takes a few hours.</p>
-            <p>If your deposit is not verified within <strong>30 minutes</strong>, your slot will be released automatically.</p>
+            <p>Your request has been received! Miel Simone will review your deposit and reach out to <strong>confirm your appointment</strong>. Please keep an eye on your phone and email.</p>
             <a href="index.html" class="btn" style="display:inline-block;max-width:300px;margin-top:28px;text-decoration:none;text-align:center;">Book Another Appointment</a>
         </div>
     </div>
@@ -367,23 +360,8 @@ AOS.init({ duration:1000, once:true });
 let selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
 let uploadedFileData = null;
 
-// ── SLOT STORAGE (localStorage) ──────────────────────────────
-function getBookings() {
-    try { return JSON.parse(localStorage.getItem('bb305_slots') || '{}'); } catch(e) { return {}; }
-}
-function saveBookings(b) { localStorage.setItem('bb305_slots', JSON.stringify(b)); }
-function slotKey(d,t) { return d + '|' + t; }
-function getSlotStatus(d, t) {
-    const b = getBookings();
-    const entry = b[slotKey(d, t)];
-    if (!entry) return 'available';
-    if (entry.status === 'pending' && (Date.now() - entry.timestamp) > 30 * 60 * 1000) {
-        delete b[slotKey(d, t)];
-        saveBookings(b);
-        return 'available';
-    }
-    return entry.status;
-}
+// ── SLOT STORAGE (session-only, no localStorage needed) ──────
+function getSlotStatus(d, t) { return 'available'; } // slots managed via email confirmation
 
 // ── CALENDAR ─────────────────────────────────────────────────
 let viewDate = new Date();
@@ -424,32 +402,51 @@ function moveMonth(dir) { viewDate.setMonth(viewDate.getMonth() + dir); renderCa
 
 // ── TIME SLOTS ───────────────────────────────────────────────
 const ALL_TIMES = [
-    '09:00 AM','09:05 AM','09:10 AM','09:15 AM','09:20 AM','09:25 AM','09:30 AM','09:35 AM','09:40 AM','09:45 AM','09:50 AM','09:55 AM',
-    '10:00 AM','10:05 AM','10:10 AM','10:15 AM','10:20 AM','10:25 AM','10:30 AM','10:35 AM','10:40 AM','10:45 AM','10:50 AM','10:55 AM',
-    '11:00 AM','11:05 AM','11:10 AM','11:15 AM','11:20 AM','11:25 AM','11:30 AM','11:35 AM','11:40 AM','11:45 AM','11:50 AM','11:55 AM',
-    '12:00 PM','12:05 PM','12:10 PM','12:15 PM','12:20 PM','12:25 PM','12:30 PM','12:35 PM','12:40 PM','12:45 PM','12:50 PM','12:55 PM',
-    '01:00 PM','01:05 PM','01:10 PM','01:15 PM','01:20 PM','01:25 PM','01:30 PM','01:35 PM','01:40 PM','01:45 PM','01:50 PM','01:55 PM',
-    '02:00 PM','02:05 PM','02:10 PM','02:15 PM','02:20 PM','02:25 PM','02:30 PM','02:35 PM','02:40 PM','02:45 PM','02:50 PM','02:55 PM',
-    '03:00 PM','03:05 PM','03:10 PM','03:15 PM','03:20 PM','03:25 PM','03:30 PM','03:35 PM','03:40 PM','03:45 PM','03:50 PM','03:55 PM',
-    '04:00 PM','04:05 PM','04:10 PM','04:15 PM','04:20 PM','04:25 PM','04:30 PM','04:35 PM','04:40 PM','04:45 PM','04:50 PM','04:55 PM',
-    '05:00 PM','05:05 PM','05:10 PM','05:15 PM','05:20 PM','05:25 PM','05:30 PM','05:35 PM','05:40 PM','05:45 PM','05:50 PM','05:55 PM',
-    '06:00 PM'
+    '09:00 AM','09:15 AM','09:30 AM','09:45 AM',
+    '10:00 AM','10:15 AM','10:30 AM','10:45 AM',
+    '11:00 AM','11:15 AM','11:30 AM','11:45 AM',
+    '12:00 PM','12:15 PM','12:30 PM','12:45 PM',
+    '01:00 PM','01:15 PM','01:30 PM','01:45 PM',
+    '02:00 PM','02:15 PM','02:30 PM','02:45 PM',
+    '03:00 PM','03:15 PM','03:30 PM','03:45 PM',
+    '04:00 PM','04:15 PM','04:30 PM','04:45 PM',
+    '05:00 PM','05:15 PM','05:30 PM','05:45 PM',
+    '06:00 PM','06:15 PM','06:30 PM','06:45 PM',
+    '07:00 PM'
 ];
 function renderTimeSlots() {
     const c = document.getElementById('timeSlots');
     c.innerHTML = '';
+
+    // Check if selected date is today — if so, block past times
+    const now = new Date();
+    const [selMonth, selDay, selYear] = selectedDate.split('/').map(Number);
+    const isToday = (
+        selYear  === now.getFullYear() &&
+        selMonth === now.getMonth() + 1 &&
+        selDay   === now.getDate()
+    );
+
     ALL_TIMES.forEach(t => {
-        const status = getSlotStatus(selectedDate, t);
         const el = document.createElement('div');
         el.className = 'time-slot';
         el.innerText = t;
-        if (status === 'booked') {
+
+        // Parse slot time and compare to now if it's today
+        let isPast = false;
+        if (isToday) {
+            const [timePart, meridiem] = t.split(' ');
+            let [hours, minutes] = timePart.split(':').map(Number);
+            if (meridiem === 'PM' && hours !== 12) hours += 12;
+            if (meridiem === 'AM' && hours === 12) hours = 0;
+            const slotDate = new Date(selYear, selMonth - 1, selDay, hours, minutes);
+            isPast = slotDate <= now;
+        }
+
+        if (isPast) {
             el.classList.add('booked');
-            el.title = 'Already booked';
-        } else if (status === 'pending') {
-            el.classList.add('pending-slot');
-            el.innerText = t + ' ⏳';
-            el.title = 'Pending – held for 30 min';
+            el.title = 'This time has already passed';
+            el.innerText = t;
         } else {
             el.onclick = () => {
                 document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
@@ -520,61 +517,71 @@ function submitBooking() {
         alert('Please upload your payment screenshot or enter a Transaction ID to confirm your deposit.');
         return;
     }
-    // Last-chance double check
-    if (getSlotStatus(selectedDate, selectedTime) !== 'available') {
-        alert('Sorry — this slot was just taken. Please go back and choose another time.');
-        goToStep(1);
-        return;
-    }
 
-    const booking = {
-        id: 'BB' + Date.now(),
-        status: 'pending',
-        timestamp: Date.now(),
-        service: selectedService,
-        price: selectedPrice,
-        date: selectedDate,
-        time: selectedTime,
-        name: document.getElementById('clientName').value.trim(),
-        phone: document.getElementById('clientPhone').value.trim(),
-        email: document.getElementById('clientEmail').value.trim(),
-        notes: document.getElementById('clientNotes').value.trim(),
-        transactionId: txId,
-        screenshot: uploadedFileData
-    };
+    const bookingId = 'BB' + Date.now();
+    const name     = document.getElementById('clientName').value.trim();
+    const phone    = document.getElementById('clientPhone').value.trim();
+    const email    = document.getElementById('clientEmail').value.trim();
+    const notes    = document.getElementById('clientNotes').value.trim();
+    const now      = new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' });
 
-    // Lock slot
-    const slots = getBookings();
-    slots[slotKey(selectedDate, selectedTime)] = { status:'pending', timestamp: booking.timestamp };
-    saveBookings(slots);
-
-    // Save to admin list
-    const all = JSON.parse(localStorage.getItem('bb305_bookings') || '[]');
-    all.push(booking);
-    localStorage.setItem('bb305_bookings', JSON.stringify(all));
-
-    // Send email confirmation via web3forms (same as original)
+    // ── Send detailed email via Web3Forms ────────────────────
     const formData = new FormData();
     formData.append('access_key', '06cebaa1-5c4e-4b36-a36d-e3d1b264e4fe');
-    formData.append('subject', 'New Booking Request – BeautyBar305');
-    formData.append('name', booking.name);
-    formData.append('phone', booking.phone);
-    formData.append('email', booking.email);
-    formData.append('service', booking.service);
-    formData.append('date', booking.date);
-    formData.append('time', booking.time);
-    formData.append('transactionId', booking.transactionId || 'Not provided');
-    formData.append('notes', booking.notes || 'None');
-    formData.append('booking_id', booking.id);
-    formData.append('message', `New booking request!\n\nName: ${booking.name}\nPhone: ${booking.phone}\nEmail: ${booking.email}\nService: ${booking.service}\nDate: ${booking.date}\nTime: ${booking.time}\nDeposit Ref: ${booking.transactionId || 'Screenshot uploaded'}\nNotes: ${booking.notes || 'None'}\nBooking ID: ${booking.id}`);
-    fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData }).catch(() => {});
+    formData.append('subject', `🌸 New Booking – ${name} | ${selectedDate} at ${selectedTime}`);
+    formData.append('from_name', 'BeautyBar305 Booking System');
+    formData.append('message',
+`═══════════════════════════════════
+  BEAUTYBAR305 — NEW BOOKING REQUEST
+═══════════════════════════════════
+
+  Booking ID : ${bookingId}
+  Submitted  : ${now}
+
+───────────────────────────────────
+  CLIENT INFO
+───────────────────────────────────
+  Name   : ${name}
+  Phone  : ${phone}
+  Email  : ${email}
+  Notes  : ${notes || 'None'}
+
+───────────────────────────────────
+  APPOINTMENT DETAILS
+───────────────────────────────────
+  Service    : ${selectedService}
+  Price      : ${selectedPrice}
+  Date       : ${selectedDate}
+  Time       : ${selectedTime}
+
+───────────────────────────────────
+  DEPOSIT
+───────────────────────────────────
+  Amount     : $10.00
+  Method     : Cash App ($mielsimonee)
+  Reference  : ${txId || '(Screenshot uploaded by client)'}
+
+───────────────────────────────────
+  ACTION NEEDED
+───────────────────────────────────
+  1. Check your Cash App for the $10 deposit
+  2. Verify the reference above matches
+  3. Text or email the client to confirm:
+     ${phone} | ${email}
+
+═══════════════════════════════════
+  BeautyBar305 by Miel Simone
+  Miami, FL
+═══════════════════════════════════`
+    );
+    fetch('https://api.web3forms.com/submit', { method:'POST', body: formData }).catch(() => {});
 
     document.getElementById('successSummary').innerHTML = `
-        <h4>Booking Ref: ${booking.id}</h4>
-        <div class="summary-row"><span>Name</span><span>${booking.name}</span></div>
-        <div class="summary-row"><span>Service</span><span>${booking.service}</span></div>
-        <div class="summary-row"><span>Date &amp; Time</span><span>${booking.date} at ${booking.time}</span></div>
-        <div class="summary-row"><span>Status</span><span style="color:#e6a020;">⏳ Pending</span></div>
+        <h4>Booking Ref: ${bookingId}</h4>
+        <div class="summary-row"><span>Name</span><span>${name}</span></div>
+        <div class="summary-row"><span>Service</span><span>${selectedService}</span></div>
+        <div class="summary-row"><span>Date &amp; Time</span><span>${selectedDate} at ${selectedTime}</span></div>
+        <div class="summary-row"><span>Status</span><span style="color:#e6a020;">⏳ Pending Verification</span></div>
     `;
     goToStep(4);
 }
