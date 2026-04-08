@@ -174,7 +174,7 @@
 <body>
 
 <nav>
-    <a href="index.html" class="logo">BeautyBar305</a>
+    <a href="index.html" class="logo">TheBeautyBar305</a>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <div class="nav-links" id="navLinks">
         <a href="services.html">Services</a>
@@ -249,6 +249,15 @@
                     </div>
                     <div style="color:var(--deep-pink);font-weight:700;">$50</div>
                 </div>
+     
+                <div class="service-card" onclick="selectService('Sew In','$100',this)">
+                    <div>
+                        <div style="font-weight:600;">Sew In</div>
+                        <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">Professional long-lasting install</div>
+                    </div>
+                    <div style="color:var(--deep-pink);font-weight:700;">$100</div>
+                </div>
+
                 <div class="deposit-reminder">
                     <strong>$10 Non-Refundable Deposit</strong>
                     <small>Required to hold your appointment slot</small>
@@ -571,10 +580,10 @@ function submitBooking() {
     const formData = new FormData();
     formData.append('access_key', '06cebaa1-5c4e-4b36-a36d-e3d1b264e4fe');
     formData.append('subject', `🌸 New Booking – ${name} | ${selectedDate} at ${selectedTime}`);
-    formData.append('from_name', 'BeautyBar305 Booking System');
+    formData.append('from_name', 'TheBeautyBar305 Booking System');
     formData.append('message',
 `═══════════════════════════════════
-  BEAUTYBAR305 — NEW BOOKING REQUEST
+  THEBEAUTYBAR305 — NEW BOOKING REQUEST
 ═══════════════════════════════════
 
   Booking ID : ${bookingId}
