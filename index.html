@@ -58,17 +58,10 @@
 
         .time-slots { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:15px; }
         .time-slot { padding:11px 5px; background:#fafafa; border-radius:10px; text-align:center; cursor:pointer; transition:0.2s; font-size:0.75rem; border:1px solid transparent; }
-        .time-slot:hover:not(.past-time) { border-color:var(--deep-pink); background:#fff0f3; }
+        .time-slot:hover { border-color:var(--deep-pink); background:#fff0f3; }
         .time-slot.selected { background:var(--deep-pink); color:white; border-color:var(--deep-pink); }
-        /* Past time slots — grayed out, not selectable */
-        .time-slot.past-time {
-            background:#f5f5f5;
-            color:#ccc;
-            cursor:not-allowed;
-            text-decoration:line-through;
-            opacity:0.5;
-            pointer-events:none;
-        }
+        .time-slot.booked { background:#f5f5f5; color:#ccc; cursor:not-allowed; text-decoration:line-through; font-size:0.7rem; }
+        .time-slot.pending-slot { background:#fff8e1; color:#e6a020; cursor:not-allowed; font-size:0.7rem; }
 
         input[type=text], input[type=tel], input[type=email], textarea, select { width:100%; padding:16px 18px; border-radius:14px; border:1px solid #eee; margin-bottom:14px; font-family:inherit; font-size:0.88rem; outline:none; transition:border 0.2s; }
         input:focus, textarea:focus { border-color:var(--deep-pink); }
@@ -112,6 +105,14 @@
         .pay-link:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
         .pay-link.cashapp { background:#00C244; color:white; }
 
+        .upload-zone { border:2px dashed #e0e0e0; border-radius:20px; padding:35px 20px; text-align:center; cursor:pointer; transition:0.3s; margin-bottom:14px; background:#fafafa; }
+        .upload-zone:hover { border-color:var(--deep-pink); background:#fff5f8; }
+        .upload-zone.has-file { border-color:var(--deep-pink); background:#fff0f6; }
+        .upload-zone .upload-icon { font-size:2.2rem; margin-bottom:8px; }
+        .upload-zone p { color:#aaa; font-size:0.83rem; }
+        .upload-zone.has-file p { color:var(--deep-pink); font-weight:600; }
+        .upload-or { text-align:center; color:#ccc; font-size:0.78rem; margin:14px 0; letter-spacing:2px; }
+
         .policy-preview { background:#fafafa; border-radius:16px; padding:22px; margin:18px 0; max-height:180px; overflow-y:auto; font-size:0.8rem; line-height:1.8; color:#777; border:1px solid #eee; }
         .policy-preview h4 { font-size:0.78rem; font-weight:700; color:#444; margin:12px 0 4px; }
         .policy-preview h4:first-child { margin-top:0; }
@@ -121,6 +122,30 @@
         .success-screen h2 { font-family:'Great Vibes',cursive; font-size:4rem; color:var(--deep-pink); margin-bottom:16px; }
         .success-screen p { color:#888; line-height:1.9; font-size:0.88rem; max-width:500px; margin:0 auto 12px; }
         .pending-badge { display:inline-block; background:#e8f5ee; color:#2e7d5a; padding:8px 22px; border-radius:50px; font-size:0.72rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+
+        .warning-note { background:#fff3e0; border-left:4px solid #e6a020; padding:14px 18px; border-radius:0 12px 12px 0; margin:20px 0; font-size:0.8rem; color:#b37a00; line-height:1.6; }
+
+        /* ── INSTAGRAM SECTION ── */
+        .instagram-section { max-width:1200px; margin:0 auto; padding:0 20px 80px; text-align:center; }
+        .instagram-section .section-heading { font-family:'Great Vibes',cursive; font-size:3.5rem; color:var(--deep-pink); margin-bottom:8px; }
+        .instagram-section .section-sub { font-size:0.72rem; letter-spacing:3px; text-transform:uppercase; color:#bbb; margin-bottom:30px; }
+        .instagram-frame { display:inline-block; position:relative; border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(244,143,177,0.2); transition:0.3s; max-width:380px; width:100%; border:3px solid #fff0f3; }
+        .instagram-frame:hover { transform:scale(1.02); box-shadow:0 28px 60px rgba(244,143,177,0.3); }
+        .instagram-frame img { width:100%; display:block; }
+        .instagram-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(244,143,177,0.85) 0%,transparent 50%); display:flex; align-items:flex-end; justify-content:center; padding:24px; opacity:0; transition:0.3s; }
+        .instagram-frame:hover .instagram-overlay { opacity:1; }
+        .instagram-overlay span { color:white; font-size:0.8rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+        .instagram-handle { display:inline-block; margin-top:18px; font-size:0.85rem; color:var(--deep-pink); font-weight:700; letter-spacing:1px; }
+
+        /* ── RESCHEDULE SECTION ── */
+        .reschedule-section { max-width:1200px; margin:0 auto; padding:0 20px 100px; }
+        .reschedule-box { background:white; border-radius:30px; padding:50px 60px; box-shadow:0 20px 50px rgba(0,0,0,0.04); border:1px solid #fff0f3; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+        .reschedule-box h2 { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--deep-pink); margin-bottom:10px; }
+        .reschedule-box .reschedule-label { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--deep-pink); font-weight:700; margin-bottom:8px; display:block; }
+        .reschedule-box p { font-size:0.88rem; color:#888; line-height:1.8; margin-bottom:20px; }
+        .reschedule-form input, .reschedule-form select, .reschedule-form textarea { width:100%; padding:16px 18px; border-radius:14px; border:1px solid #eee; margin-bottom:14px; font-family:inherit; font-size:0.88rem; outline:none; transition:border 0.2s; }
+        .reschedule-form input:focus, .reschedule-form select:focus { border-color:var(--deep-pink); }
+        .reschedule-note { background:#fff5f8; border-radius:14px; padding:16px 20px; font-size:0.8rem; color:#d8819d; line-height:1.7; margin-bottom:20px; border-left:4px solid var(--deep-pink); }
 
         footer { text-align:center; padding:40px; font-size:0.7rem; color:#bbb; letter-spacing:2px; text-transform:uppercase; border-top:1px solid #fff0f3; }
 
@@ -133,6 +158,7 @@
             .booking-grid { grid-template-columns:1fr; gap:30px; }
             .booking-panel { padding:30px 20px; }
             .time-slots { grid-template-columns:repeat(2,1fr); }
+            .reschedule-box { grid-template-columns:1fr; gap:30px; padding:35px 25px; }
         }
         @media (max-width:480px) {
             .hero h1 { font-size:3.8rem; }
@@ -140,6 +166,8 @@
             .step span:not(.step-num) { display:none; }
             .step-divider { width:20px; }
             .pay-links { flex-direction:column; align-items:stretch; }
+            .instagram-frame { max-width:100%; }
+            .reschedule-box { padding:25px 18px; }
         }
     </style>
 </head>
@@ -319,6 +347,46 @@
 
 </div>
 
+<!-- ── INSTAGRAM SECTION ── -->
+<section class="instagram-section" data-aos="fade-up">
+    <p class="section-sub">Follow Along</p>
+    <h2 class="section-heading">Tag Our Page</h2>
+    <p style="font-size:0.85rem;color:#aaa;margin-bottom:28px;">Share your look and tag us — we love to see your transformation! 🌸</p>
+    <a href="https://www.instagram.com/beautybar305" target="_blank" class="instagram-frame">
+        <img src="InstagramHandle.PNG" alt="TheBeautyBar305 Instagram">
+        <div class="instagram-overlay"><span>View on Instagram →</span></div>
+    </a>
+    <br>
+    <a href="https://www.instagram.com/thebeautybar.305/?hl=en" target="_blank" class="instagram-handle">@thebeautybar.305</a>
+</section>
+
+<!-- ── RESCHEDULE SECTION ── -->
+<section class="reschedule-section" data-aos="fade-up">
+    <div class="reschedule-box">
+        <div>
+            <span class="reschedule-label">Need to Change Your Appointment?</span>
+            <h2>Reschedule</h2>
+            <p>Life happens! Fill out the form and we'll get you moved to a new time. No extra deposit needed — just make sure to reschedule at least <strong>24 hours in advance</strong>.</p>
+            <div class="reschedule-note">
+                📌 Your original $10 deposit transfers to your new appointment date. Cancellations made less than 24 hours before will forfeit the deposit.
+            </div>
+        </div>
+        <div class="reschedule-form">
+            <input type="text" id="rName" placeholder="Full Name" required>
+            <input type="tel" id="rPhone" placeholder="Phone Number" required>
+            <input type="text" id="rOldDate" placeholder="Current Appointment Date (e.g. 4/20/2026)">
+            <input type="text" id="rOldTime" placeholder="Current Appointment Time (e.g. 2:00 PM)">
+            <input type="text" id="rNewDate" placeholder="Preferred New Date (e.g. 4/25/2026)">
+            <input type="text" id="rNewTime" placeholder="Preferred New Time (e.g. 3:00 PM)">
+            <textarea id="rNotes" rows="2" placeholder="Any notes for Miel Simone..."></textarea>
+            <button class="btn" onclick="submitReschedule()">Request Reschedule →</button>
+            <div id="rescheduleSuccess" style="display:none;margin-top:16px;background:#e8f5ee;border-radius:14px;padding:16px 20px;font-size:0.85rem;color:#2e7d5a;font-weight:600;text-align:center;">
+                ✅ Reschedule request sent! Miel Simone will confirm your new time shortly.
+            </div>
+        </div>
+    </div>
+</section>
+
 <footer>&copy; 2026 BeautyBar305 by Miel Simone.</footer>
 
 <script>
@@ -340,6 +408,10 @@ AOS.init({ duration:1000, once:true });
 
 // ── STATE ────────────────────────────────────────────────────
 let selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
+let uploadedFileData = null;
+
+// ── SLOT STORAGE (session-only, no localStorage needed) ──────
+function getSlotStatus(d, t) { return 'available'; } // slots managed via email confirmation
 
 // ── CALENDAR ─────────────────────────────────────────────────
 let viewDate = new Date();
@@ -392,26 +464,11 @@ const ALL_TIMES = [
     '06:00 PM','06:15 PM','06:30 PM','06:45 PM',
     '07:00 PM'
 ];
-
-/**
- * Returns true if the given time string (e.g. "02:30 PM") on the given
- * date string (e.g. "4/1/2026") is in the past relative to right now.
- */
-function isTimePast(dateStr, timeStr) {
-    const [month, day, year] = dateStr.split('/').map(Number);
-    const [timePart, meridiem] = timeStr.split(' ');
-    let [hours, minutes] = timePart.split(':').map(Number);
-    if (meridiem === 'PM' && hours !== 12) hours += 12;
-    if (meridiem === 'AM' && hours === 12) hours = 0;
-    const slotDateTime = new Date(year, month - 1, day, hours, minutes, 0, 0);
-    return slotDateTime <= new Date(); // past or exactly now → block it
-}
-
 function renderTimeSlots() {
     const c = document.getElementById('timeSlots');
     c.innerHTML = '';
 
-    // Determine if selected date is today
+    // Check if selected date is today — if so, block past times
     const now = new Date();
     const [selMonth, selDay, selYear] = selectedDate.split('/').map(Number);
     const isToday = (
@@ -425,10 +482,21 @@ function renderTimeSlots() {
         el.className = 'time-slot';
         el.innerText = t;
 
-        // Only check if time is past when the selected date is today
-        if (isToday && isTimePast(selectedDate, t)) {
-            el.classList.add('past-time');
+        // Parse slot time and compare to now if it's today
+        let isPast = false;
+        if (isToday) {
+            const [timePart, meridiem] = t.split(' ');
+            let [hours, minutes] = timePart.split(':').map(Number);
+            if (meridiem === 'PM' && hours !== 12) hours += 12;
+            if (meridiem === 'AM' && hours === 12) hours = 0;
+            const slotDate = new Date(selYear, selMonth - 1, selDay, hours, minutes);
+            isPast = slotDate <= now;
+        }
+
+        if (isPast) {
+            el.classList.add('booked');
             el.title = 'This time has already passed';
+            el.innerText = t;
         } else {
             el.onclick = () => {
                 document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
@@ -437,7 +505,6 @@ function renderTimeSlots() {
             };
             if (selectedTime === t) el.classList.add('selected');
         }
-
         c.appendChild(el);
     });
 }
@@ -466,6 +533,11 @@ function goToStep2() {
     if (!selectedService) { alert('Please select a service.'); return; }
     if (!selectedDate)    { alert('Please select a date.'); return; }
     if (!selectedTime)    { alert('Please select a time slot.'); return; }
+    if (getSlotStatus(selectedDate, selectedTime) !== 'available') {
+        alert('That slot was just taken! Please choose another time.');
+        renderTimeSlots();
+        return;
+    }
     document.getElementById('step2Summary').innerHTML = `
         <h4>Your Selection</h4>
         <div class="summary-row"><span>Service</span><span>${selectedService}</span></div>
@@ -553,6 +625,60 @@ function submitBooking() {
         <div class="summary-row"><span>Deposit</span><span style="color:#4caf88;">$10 via Cash App</span></div>
     `;
     goToStep(4);
+}
+
+// ── FILE UPLOAD (kept but unused — clean removal) ────────────
+function handleFileUpload() {}
+
+// ── RESCHEDULE ───────────────────────────────────────────────
+function submitReschedule() {
+    const name    = document.getElementById('rName').value.trim();
+    const phone   = document.getElementById('rPhone').value.trim();
+    const oldDate = document.getElementById('rOldDate').value.trim();
+    const oldTime = document.getElementById('rOldTime').value.trim();
+    const newDate = document.getElementById('rNewDate').value.trim();
+    const newTime = document.getElementById('rNewTime').value.trim();
+    const notes   = document.getElementById('rNotes').value.trim();
+
+    if (!name)  { alert('Please enter your full name.'); return; }
+    if (!phone) { alert('Please enter your phone number.'); return; }
+    if (!newDate || !newTime) { alert('Please enter your preferred new date and time.'); return; }
+
+    const formData = new FormData();
+    formData.append('access_key', '06cebaa1-5c4e-4b36-a36d-e3d1b264e4fe');
+    formData.append('subject', '🔄 Reschedule Request – ' + name + ' | New: ' + newDate + ' at ' + newTime);
+    formData.append('from_name', 'BeautyBar305 Booking System');
+    formData.append('message',
+'═══════════════════════════════════\n' +
+'  BEAUTYBAR305 — RESCHEDULE REQUEST\n' +
+'═══════════════════════════════════\n\n' +
+'  CLIENT INFO\n' +
+'───────────────────────────────────\n' +
+'  Name    : ' + name + '\n' +
+'  Phone   : ' + phone + '\n\n' +
+'  CURRENT APPOINTMENT\n' +
+'───────────────────────────────────\n' +
+'  Date    : ' + (oldDate || 'Not provided') + '\n' +
+'  Time    : ' + (oldTime || 'Not provided') + '\n\n' +
+'  REQUESTED NEW TIME\n' +
+'───────────────────────────────────\n' +
+'  Date    : ' + newDate + '\n' +
+'  Time    : ' + newTime + '\n\n' +
+'  Notes   : ' + (notes || 'None') + '\n\n' +
+'───────────────────────────────────\n' +
+'  No new deposit required.\n' +
+'  Contact client to confirm: ' + phone + '\n' +
+'═══════════════════════════════════'
+    );
+
+    fetch('https://api.web3forms.com/submit', { method:'POST', body: formData })
+        .then(() => {
+            document.getElementById('rescheduleSuccess').style.display = 'block';
+            ['rName','rPhone','rOldDate','rOldTime','rNewDate','rNewTime','rNotes'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+        })
+        .catch(() => { alert('Something went wrong. Please try again.'); });
 }
 
 renderCalendar();
