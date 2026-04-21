@@ -100,14 +100,12 @@
         .payment-box h2 { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--deep-pink); margin-bottom:8px; }
         .deposit-amount { font-size:2.8rem; font-weight:700; color:#333; margin:10px 0; }
         .payment-box p { color:#888; font-size:0.83rem; line-height:1.7; }
-        .pay-links { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:22px 0; }
-        .pay-link { display:inline-flex; align-items:center; gap:8px; padding:14px 24px; border-radius:50px; text-decoration:none; font-weight:700; font-size:0.78rem; letter-spacing:1px; transition:0.3s; }
-        .pay-link:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
-        .pay-link.cashapp { background:#00C244; color:white; }
-        .pay-link.zelle   { background:#6D1ED4; color:white; }
-        .pay-link.applepay { background:#1c1c1e; color:white; }
-        .pay-methods-divider { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:#ccc; margin:6px 0 4px; }
-        .pay-method-label { font-size:0.68rem; color:#aaa; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; display:block; }
+        .pay-links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:22px 0; }
+        .pay-link { display:inline-flex; align-items:center; justify-content:center; width:72px; height:72px; border-radius:20px; text-decoration:none; transition:0.3s; flex-shrink:0; }
+        .pay-link:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,0.18); }
+        .pay-link.cashapp  { background:#00C244; }
+        .pay-link.zelle    { background:#6D1ED4; }
+        .pay-link.applepay { background:#000; }
 
         .upload-zone { border:2px dashed #e0e0e0; border-radius:20px; padding:35px 20px; text-align:center; cursor:pointer; transition:0.3s; margin-bottom:14px; background:#fafafa; }
         .upload-zone:hover { border-color:var(--deep-pink); background:#fff5f8; }
@@ -169,7 +167,7 @@
             .container { padding:60px 12px; }
             .step span:not(.step-num) { display:none; }
             .step-divider { width:20px; }
-            .pay-links { flex-direction:column; align-items:stretch; }
+            .pay-links { flex-direction:row; justify-content:center; }
             .instagram-frame { max-width:100%; }
             .reschedule-box { padding:25px 18px; }
         }
@@ -251,14 +249,6 @@
             color: #888;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        #stuPopup .popup-dates {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--deep-pink);
-            letter-spacing: 1px;
             margin-bottom: 18px;
         }
 
@@ -389,7 +379,6 @@
         <h2>STU Spring<br>Semester Sale</h2>
         <div class="popup-offer"><span>50% OFF</span></div>
         <div class="popup-services">Loc & Wig Services</div>
-        <div class="popup-dates">April 26 – May 8, 2026</div>
         <div class="popup-id-note">🪪 STU Student ID Required</div>
         <button class="popup-claim-btn" onclick="claimOffer()">Claim Your Discount →</button>
         <button class="popup-dismiss" onclick="closePopup()">Maybe later</button>
@@ -437,26 +426,26 @@
         <div class="booking-grid">
             <div>
                 <span class="section-label">01. Select Service</span>
-                <div class="stu-sale-banner" id="stuSaleBanner">
+                <div class="stu-sale-banner">
                     <span class="sale-emoji">🎓</span>
                     <div class="sale-details">
                         <strong>End of Spring Semester Sale — STU Students</strong>
                         50% OFF Loc &amp; Wig services · STU Student ID Required at appointment
                     </div>
                 </div>
-                <div class="service-card" id="card-wig" onclick="selectService('Wig Frontal Install','$32.50',this)">
+                <div class="service-card" onclick="selectService('Wig Frontal Install','$32.50',this)">
                     <div>
-                        <div style="font-weight:600;" class="card-title">Wig Frontal Install <span class="sale-tag">50% OFF</span></div>
+                        <div style="font-weight:600;">Wig Frontal Install <span class="sale-tag">50% OFF</span></div>
                         <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">+ $20 for styling</div>
                     </div>
-                    <div class="card-price"><span class="price-original">$65</span><span class="price-sale">$32.50</span></div>
+                    <div><span class="price-original">$65</span><span class="price-sale">$32.50</span></div>
                 </div>
-                <div class="service-card" id="card-loc" onclick="selectService('Loc Retwist','$25',this)">
+                <div class="service-card" onclick="selectService('Loc Retwist','$25',this)">
                     <div>
-                        <div style="font-weight:600;" class="card-title">Loc Retwist <span class="sale-tag">50% OFF</span></div>
+                        <div style="font-weight:600;">Loc Retwist <span class="sale-tag">50% OFF</span></div>
                         <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">Healthy &amp; neat locs</div>
                     </div>
-                    <div class="card-price"><span class="price-original">$50</span><span class="price-sale">$25</span></div>
+                    <div><span class="price-original">$50</span><span class="price-sale">$25</span></div>
                 </div>
                 <div class="service-card" onclick="selectService('Closure Install','$35',this)">
                     <div>
@@ -557,24 +546,33 @@
             <div class="payment-box">
                 <h2>Send Your Deposit</h2>
                 <div class="deposit-amount">$10.00</div>
-                <p>Send your <strong>$10 non-refundable deposit</strong> using any of the three methods below to secure your slot. Your appointment is only confirmed once Miel Simone manually verifies your payment.</p>
-
-                <span class="pay-method-label" style="margin-top:18px;">Choose a payment method</span>
+                <p>Send your $10 non-refundable deposit via <strong>Cash App, Zelle, or Apple Pay</strong> to secure your appointment, then hit <strong>Submit Booking</strong> below.</p>
                 <div class="pay-links">
-                    <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link cashapp">
-                        💵 Cash App: $mielsimonee
-                    </a>
-                    <a href="https://enroll.zellepay.com" target="_blank" class="pay-link zelle">
-                        💜 Zelle: [Your Zelle Email/Phone]
-                    </a>
-                    <a href="https://www.apple.com/apple-pay/" target="_blank" class="pay-link applepay">
-                         Apple Pay: [Your Apple Pay Phone]
-                    </a>
-                </div>
 
-                <div class="warning-note" style="text-align:left;margin-top:4px;">
-                    ⚠️ <strong>Manual Verification Required:</strong> After sending your deposit, hit <em>Submit Booking</em> below. Miel Simone will review your payment and reach out to confirm your appointment. Your slot is <strong>not guaranteed</strong> until verification is complete.
+                    <!-- Cash App -->
+                    <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link cashapp" title="Cash App: $mielsimonee">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.07 14.13c-.48-.2-1.01-.32-1.57-.32-1.72 0-2.93 1.02-2.93 2.48 0 1.07.67 1.79 2.03 2.37.96.41 1.22.67 1.22 1.12 0 .51-.48.85-1.22.85-.74 0-1.52-.27-2.18-.72l-.38 2.03c.7.38 1.57.6 2.45.6.2 0 .39-.01.57-.04l-.32 1.5h1.81l.34-1.6c1.5-.34 2.51-1.35 2.51-2.77 0-1.14-.63-1.87-2.07-2.47-.96-.4-1.22-.65-1.22-1.07 0-.42.4-.72 1.04-.72.62 0 1.24.19 1.76.51l.36-1.93c-.06-.04-.12-.07-.2-.11zm1.23-3.63l-.33 1.53c-.53-.3-1.13-.51-1.76-.62l.33-1.53H18.7l-.33 1.53c-2.17.36-3.77 1.73-3.77 3.64 0 1.56.91 2.49 2.52 3.16.9.38 1.27.67 1.27 1.15 0 .55-.52.9-1.32.9-.83 0-1.73-.29-2.44-.77l-.4 2.12c.72.42 1.62.68 2.55.72l-.34 1.57h1.81l.34-1.57c2.24-.3 3.83-1.69 3.83-3.66 0-1.58-.91-2.52-2.58-3.19-.87-.35-1.21-.63-1.21-1.08 0-.48.46-.8 1.18-.8.65 0 1.31.2 1.84.53l.38-1.97c-.52-.28-1.1-.47-1.72-.56l.33-1.53h-1.8z" fill="white"/>
+                        </svg>
+                    </a>
+
+                    <!-- Zelle -->
+                    <a href="https://enroll.zellepay.com/" target="_blank" class="pay-link zelle" title="Zelle: 3526827635">
+                        <svg width="44" height="20" viewBox="0 0 74 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.36 0H22.5l-1.04 4.67H9.82L4.67 14h9.55l-1.04 4.67H0L8.36 0zM51.5 0h5.2l-5.2 23.33h-5.2L51.5 0zM62.4 0h5.2l-5.2 23.33h-5.2L62.4 0zM25.5 6.67h11.17L25.5 18.67h11.17l-1.04 4.66H22.5l11.17-12H22.5l1.04-4.66h1.96zM41.5 6.67c2.88 0 5.2 2.09 5.2 4.67 0 .5-.08.97-.23 1.42L40.1 18h6.6l-1.04 4.67H33.5l7.28-8.31c.16-.4.25-.82.25-1.27 0-1.29-1.04-2.33-2.33-2.33-1.2 0-2.2.9-2.32 2.07l-4.9 1.1c.13-3.54 3.05-6.26 6.72-6.26h3.3z" fill="white"/>
+                        </svg>
+                    </a>
+
+                    <!-- Apple Pay -->
+                    <a href="tel:5616310415" class="pay-link applepay" title="Apple Pay: [Your Phone Number]">
+                        <svg width="44" height="20" viewBox="0 0 50 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.1 2.83c-.6.7-1.56 1.25-2.52 1.17-.12-.96.35-1.98.9-2.61C8.1.67 9.14.17 10 .13c.1.99-.29 1.96-.9 2.7zm.89 1.4c-1.39-.08-2.58.79-3.24.79-.67 0-1.68-.75-2.78-.73C2.5 4.31.97 5.29.28 6.82c-1.42 2.44-.37 6.07 1 8.06.67.97 1.47 2.04 2.52 2.01 1-.04 1.39-.65 2.6-.65 1.22 0 1.57.65 2.62.63 1.09-.02 1.77-1 2.44-1.97.77-1.12 1.09-2.21 1.11-2.27-.02-.02-2.13-.82-2.15-3.24-.02-2.02 1.65-2.99 1.73-3.05-.95-1.4-2.42-1.55-2.96-1.59zM19.5 1.1h-3.12v15.07h1.93V11.1h2.72c2.48 0 4.22-1.7 4.22-4.99 0-3.3-1.7-5-4.75-5zm.45 8.32H18.3V2.74h1.6c1.72 0 2.65.93 2.65 3.33s-.93 3.35-2.6 3.35zm10.75-1.13c-1.49 0-2.6.8-2.97 2.02h-.08l-.23-1.85h-1.69c.05.88.1 1.9.1 3.1v6.6h1.92v-4.55h.06c.34 1.06 1.38 1.73 2.73 1.73 2.1 0 3.56-1.66 3.56-4.6 0-2.75-1.37-4.45-3.4-4.45zm-.51 7.4c-1.07 0-1.84-.87-1.84-2.16v-1.3c0-1.25.72-2.1 1.82-2.1 1.25 0 1.98 1.04 1.98 2.8 0 1.8-.71 2.76-1.96 2.76zm8.2 4.48c1.55 0 2.53-.74 2.9-2.06l.01-.01h.01l1.72-5.62c.06-.17.1-.35.1-.5h-1.9l-1.15 4.47h-.08l-1.16-4.47h-1.97l2.28 6.28-.12.39c-.23.74-.6 1.03-1.27 1.03-.13 0-.38-.01-.51-.04v1.47c.17.04.52.06.74.06z" fill="white"/>
+                        </svg>
+                    </a>
+
                 </div>
+                <p style="font-size:0.72rem;color:#bbb;margin-top:2px;">Cash App: $mielsimonee &nbsp;·&nbsp; Zelle: 3526827635 &nbsp;·&nbsp; Apple Pay: 5616310415</p>
+                <p style="font-size:0.75rem;color:#e87da6;font-weight:700;margin-top:10px;">⚠️ Your appointment is not confirmed until Miel Simone manually verifies your deposit.</p>
             </div>
 
             <div class="btn-row">
@@ -591,7 +589,7 @@
             <div class="pending-badge">✅ Booking Submitted!</div>
             <h2>You're All Set!</h2>
             <div class="summary-card" id="successSummary" style="max-width:460px;margin:0 auto 24px;text-align:left;"></div>
-            <p>Your booking has been received! Please send your <strong>$10 deposit via Cash App ($mielsimonee), Zelle, or Apple Pay</strong> if you haven't already. Miel Simone will manually verify your payment and reach out to confirm your appointment.</p>
+            <p>Your booking has been received! Please send your <strong>$10 deposit via Cash App to $mielsimonee</strong> if you haven't already. Miel Simone will reach out to confirm your appointment.</p>
             <a href="index.html" class="btn" style="display:inline-block;max-width:300px;margin-top:28px;text-decoration:none;text-align:center;">Book Another Appointment</a>
         </div>
     </div>
@@ -851,7 +849,7 @@ function submitBooking() {
   DEPOSIT
 ───────────────────────────────────
   Amount     : $10.00
-  Method     : Cash App ($mielsimonee) · Zelle · Apple Pay
+  Method     : Cash App ($mielsimonee)
 
 ───────────────────────────────────
   ACTION NEEDED
@@ -930,65 +928,9 @@ function submitReschedule() {
         .catch(() => { alert('Something went wrong. Please try again.'); });
 }
 
-// ── STU SALE DATE GATE ───────────────────────────────────────
-// Sale runs April 26 – May 8, 2026 (inclusive, local time)
-var SALE_START = new Date(2026, 3, 26);  // month is 0-indexed: 3 = April
-var SALE_END   = new Date(2026, 4,  8, 23, 59, 59); // May 8, end of day
-
-function isSaleActive() {
-    var now = new Date();
-    return now >= SALE_START && now <= SALE_END;
-}
-
-// ── APPLY SALE PRICING TO SERVICE CARDS ─────────────────────
-// Called once on load — swaps in discounted prices if within range,
-// or restores originals if outside the window.
-(function applySalePricing() {
-    var saleOn = isSaleActive();
-
-    // --- Wig Frontal Install ---
-    var wigCard = document.getElementById('card-wig');
-    if (wigCard) {
-        wigCard.querySelector('.card-title').innerHTML =
-            saleOn
-                ? 'Wig Frontal Install <span class="sale-tag">50% OFF</span>'
-                : 'Wig Frontal Install';
-        wigCard.querySelector('.card-price').innerHTML =
-            saleOn
-                ? '<span class="price-original">$65</span><span class="price-sale">$32.50</span>'
-                : '<span style="color:var(--deep-pink);font-weight:700;">$65</span>';
-        wigCard.setAttribute('onclick',
-            saleOn
-                ? "selectService('Wig Frontal Install','$32.50',this)"
-                : "selectService('Wig Frontal Install','$65',this)");
-    }
-
-    // --- Loc Retwist ---
-    var locCard = document.getElementById('card-loc');
-    if (locCard) {
-        locCard.querySelector('.card-title').innerHTML =
-            saleOn
-                ? 'Loc Retwist <span class="sale-tag">50% OFF</span>'
-                : 'Loc Retwist';
-        locCard.querySelector('.card-price').innerHTML =
-            saleOn
-                ? '<span class="price-original">$50</span><span class="price-sale">$25</span>'
-                : '<span style="color:var(--deep-pink);font-weight:700;">$50</span>';
-        locCard.setAttribute('onclick',
-            saleOn
-                ? "selectService('Loc Retwist','$25',this)"
-                : "selectService('Loc Retwist','$50',this)");
-    }
-
-    // Show/hide the sale banner
-    var banner = document.getElementById('stuSaleBanner');
-    if (banner) banner.style.display = saleOn ? 'flex' : 'none';
-})();
-
 // ── STU SALE POPUP ───────────────────────────────────────────
 (function() {
-    // Only show popup if the sale is currently active AND not already seen this session
-    if (isSaleActive() && !sessionStorage.getItem('stuPopupSeen')) {
+    if (!sessionStorage.getItem('stuPopupSeen')) {
         setTimeout(function() {
             var overlay = document.getElementById('stuPopupOverlay');
             if (overlay) overlay.classList.add('visible');
