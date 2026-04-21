@@ -104,6 +104,10 @@
         .pay-link { display:inline-flex; align-items:center; gap:8px; padding:14px 24px; border-radius:50px; text-decoration:none; font-weight:700; font-size:0.78rem; letter-spacing:1px; transition:0.3s; }
         .pay-link:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
         .pay-link.cashapp { background:#00C244; color:white; }
+        .pay-link.zelle   { background:#6D1ED4; color:white; }
+        .pay-link.applepay { background:#1c1c1e; color:white; }
+        .pay-methods-divider { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:#ccc; margin:6px 0 4px; }
+        .pay-method-label { font-size:0.68rem; color:#aaa; letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; display:block; }
 
         .upload-zone { border:2px dashed #e0e0e0; border-radius:20px; padding:35px 20px; text-align:center; cursor:pointer; transition:0.3s; margin-bottom:14px; background:#fafafa; }
         .upload-zone:hover { border-color:var(--deep-pink); background:#fff5f8; }
@@ -169,9 +173,228 @@
             .instagram-frame { max-width:100%; }
             .reschedule-box { padding:25px 18px; }
         }
+
+        /* ── STU SALE POPUP ── */
+        #stuPopupOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(244, 143, 177, 0.18);
+            backdrop-filter: blur(6px);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #stuPopupOverlay.visible {
+            display: flex;
+            animation: popupFadeIn 0.4s ease forwards;
+        }
+        @keyframes popupFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #stuPopup {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(244, 143, 177, 0.3);
+            border-radius: 36px;
+            padding: 55px 50px 45px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(244, 143, 177, 0.2), 0 0 0 1px rgba(255,255,255,0.6) inset;
+            position: relative;
+            transform: scale(0.85);
+            opacity: 0;
+            transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+        }
+        #stuPopupOverlay.visible #stuPopup {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        #stuPopup .popup-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--soft-pink), #ffb3c9);
+            color: #c2506f;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 7px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+
+        #stuPopup h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.6rem;
+            color: var(--deep-pink);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        #stuPopup .popup-offer {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #333;
+            letter-spacing: -1px;
+            margin: 10px 0 6px;
+        }
+
+        #stuPopup .popup-offer span {
+            color: var(--deep-pink);
+        }
+
+        #stuPopup .popup-services {
+            font-size: 0.78rem;
+            color: #888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        #stuPopup .popup-dates {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--deep-pink);
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        #stuPopup .popup-id-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #fff5f8;
+            border: 1px solid var(--soft-pink);
+            border-radius: 50px;
+            padding: 9px 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #d8819d;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        #stuPopup .popup-claim-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--deep-pink);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 28px rgba(244, 143, 177, 0.45);
+            margin-bottom: 14px;
+        }
+
+        #stuPopup .popup-claim-btn:hover {
+            background: #e87da6;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(244, 143, 177, 0.55);
+        }
+
+        #stuPopup .popup-dismiss {
+            background: none;
+            border: none;
+            font-size: 0.72rem;
+            color: #ccc;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.2s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        #stuPopup .popup-dismiss:hover { color: #aaa; }
+
+        #stuPopup .popup-close-x {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: #ccc;
+            cursor: pointer;
+            line-height: 1;
+            transition: 0.2s;
+        }
+        #stuPopup .popup-close-x:hover { color: var(--deep-pink); }
+
+        @media (max-width: 480px) {
+            #stuPopup { padding: 40px 28px 34px; border-radius: 28px; }
+            #stuPopup h2 { font-size: 2.8rem; }
+            #stuPopup .popup-offer { font-size: 2.4rem; }
+        }
+
+        /* ── STU SALE BANNER in booking section ── */
+        .stu-sale-banner {
+            background: linear-gradient(135deg, #fff0f5, #fff5f8);
+            border: 2px solid var(--soft-pink);
+            border-radius: 20px;
+            padding: 16px 22px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #d8819d;
+            font-weight: 700;
+        }
+        .stu-sale-banner .sale-emoji { font-size: 1.2rem; }
+        .stu-sale-banner .sale-details { line-height: 1.5; }
+        .stu-sale-banner .sale-details strong { display: block; font-size: 0.85rem; color: var(--deep-pink); }
+
+        /* ── SALE PRICE DISPLAY ── */
+        .price-original {
+            font-size: 0.78rem;
+            color: #ccc;
+            text-decoration: line-through;
+            margin-right: 4px;
+        }
+        .price-sale {
+            color: #c2506f;
+            font-weight: 700;
+        }
+        .sale-tag {
+            font-size: 0.6rem;
+            background: var(--soft-pink);
+            color: #c2506f;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 50px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
+
+<!-- ── STU SPRING SEMESTER SALE POPUP ── -->
+<div id="stuPopupOverlay" role="dialog" aria-modal="true" aria-label="STU Spring Semester Sale">
+    <div id="stuPopup">
+        <button class="popup-close-x" onclick="closePopup()" aria-label="Close">✕</button>
+        <div class="popup-badge">🌸 Limited Time Offer</div>
+        <h2>STU Spring<br>Semester Sale</h2>
+        <div class="popup-offer"><span>50% OFF</span></div>
+        <div class="popup-services">Loc & Wig Services</div>
+        <div class="popup-dates">April 26 – May 8, 2026</div>
+        <div class="popup-id-note">🪪 STU Student ID Required</div>
+        <button class="popup-claim-btn" onclick="claimOffer()">Claim Your Discount →</button>
+        <button class="popup-dismiss" onclick="closePopup()">Maybe later</button>
+    </div>
+</div>
 
 <nav>
     <a href="index.html" class="logo">TheBeautyBar305</a>
@@ -214,19 +437,26 @@
         <div class="booking-grid">
             <div>
                 <span class="section-label">01. Select Service</span>
-                <div class="service-card" onclick="selectService('Wig Frontal Install','$65',this)">
+                <div class="stu-sale-banner" id="stuSaleBanner">
+                    <span class="sale-emoji">🎓</span>
+                    <div class="sale-details">
+                        <strong>End of Spring Semester Sale — STU Students</strong>
+                        50% OFF Loc &amp; Wig services · STU Student ID Required at appointment
+                    </div>
+                </div>
+                <div class="service-card" id="card-wig" onclick="selectService('Wig Frontal Install','$32.50',this)">
                     <div>
-                        <div style="font-weight:600;">Wig Frontal Install</div>
+                        <div style="font-weight:600;" class="card-title">Wig Frontal Install <span class="sale-tag">50% OFF</span></div>
                         <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">+ $20 for styling</div>
                     </div>
-                    <div style="color:var(--deep-pink);font-weight:700;">$65</div>
+                    <div class="card-price"><span class="price-original">$65</span><span class="price-sale">$32.50</span></div>
                 </div>
-                <div class="service-card" onclick="selectService('Loc Retwist','$50',this)">
+                <div class="service-card" id="card-loc" onclick="selectService('Loc Retwist','$25',this)">
                     <div>
-                        <div style="font-weight:600;">Loc Retwist</div>
+                        <div style="font-weight:600;" class="card-title">Loc Retwist <span class="sale-tag">50% OFF</span></div>
                         <div style="font-size:0.73rem;color:#bbb;margin-top:4px;">Healthy &amp; neat locs</div>
                     </div>
-                    <div style="color:var(--deep-pink);font-weight:700;">$50</div>
+                    <div class="card-price"><span class="price-original">$50</span><span class="price-sale">$25</span></div>
                 </div>
                 <div class="service-card" onclick="selectService('Closure Install','$35',this)">
                     <div>
@@ -261,6 +491,7 @@
                 <div class="deposit-reminder">
                     <strong>$10 Non-Refundable Deposit</strong>
                     <small>Required to hold your appointment slot</small>
+                    <small style="display:block;margin-top:5px;color:#e87da6;">🪪 STU Student ID required at time of service to receive sale pricing</small>
                 </div>
             </div>
             <div>
@@ -326,13 +557,24 @@
             <div class="payment-box">
                 <h2>Send Your Deposit</h2>
                 <div class="deposit-amount">$10.00</div>
-                <p>Send your $10 non-refundable deposit via Cash App to secure your appointment, then hit <strong>Submit Booking</strong> below.</p>
+                <p>Send your <strong>$10 non-refundable deposit</strong> using any of the three methods below to secure your slot. Your appointment is only confirmed once Miel Simone manually verifies your payment.</p>
+
+                <span class="pay-method-label" style="margin-top:18px;">Choose a payment method</span>
                 <div class="pay-links">
                     <a href="https://cash.app/$mielsimonee" target="_blank" class="pay-link cashapp">
                         💵 Cash App: $mielsimonee
                     </a>
+                    <a href="https://enroll.zellepay.com" target="_blank" class="pay-link zelle">
+                        💜 Zelle: [Your Zelle Email/Phone]
+                    </a>
+                    <a href="https://www.apple.com/apple-pay/" target="_blank" class="pay-link applepay">
+                         Apple Pay: [Your Apple Pay Phone]
+                    </a>
                 </div>
-                <p style="font-size:0.75rem;color:#e87da6;font-weight:700;margin-top:5px;">⚠️ Your appointment is not confirmed until Miel Simone verifies your deposit.</p>
+
+                <div class="warning-note" style="text-align:left;margin-top:4px;">
+                    ⚠️ <strong>Manual Verification Required:</strong> After sending your deposit, hit <em>Submit Booking</em> below. Miel Simone will review your payment and reach out to confirm your appointment. Your slot is <strong>not guaranteed</strong> until verification is complete.
+                </div>
             </div>
 
             <div class="btn-row">
@@ -349,7 +591,7 @@
             <div class="pending-badge">✅ Booking Submitted!</div>
             <h2>You're All Set!</h2>
             <div class="summary-card" id="successSummary" style="max-width:460px;margin:0 auto 24px;text-align:left;"></div>
-            <p>Your booking has been received! Please send your <strong>$10 deposit via Cash App to $mielsimonee</strong> if you haven't already. Miel Simone will reach out to confirm your appointment.</p>
+            <p>Your booking has been received! Please send your <strong>$10 deposit via Cash App ($mielsimonee), Zelle, or Apple Pay</strong> if you haven't already. Miel Simone will manually verify your payment and reach out to confirm your appointment.</p>
             <a href="index.html" class="btn" style="display:inline-block;max-width:300px;margin-top:28px;text-decoration:none;text-align:center;">Book Another Appointment</a>
         </div>
     </div>
@@ -609,7 +851,7 @@ function submitBooking() {
   DEPOSIT
 ───────────────────────────────────
   Amount     : $10.00
-  Method     : Cash App ($mielsimonee)
+  Method     : Cash App ($mielsimonee) · Zelle · Apple Pay
 
 ───────────────────────────────────
   ACTION NEEDED
@@ -686,6 +928,92 @@ function submitReschedule() {
             });
         })
         .catch(() => { alert('Something went wrong. Please try again.'); });
+}
+
+// ── STU SALE DATE GATE ───────────────────────────────────────
+// Sale runs April 26 – May 8, 2026 (inclusive, local time)
+var SALE_START = new Date(2026, 3, 26);  // month is 0-indexed: 3 = April
+var SALE_END   = new Date(2026, 4,  8, 23, 59, 59); // May 8, end of day
+
+function isSaleActive() {
+    var now = new Date();
+    return now >= SALE_START && now <= SALE_END;
+}
+
+// ── APPLY SALE PRICING TO SERVICE CARDS ─────────────────────
+// Called once on load — swaps in discounted prices if within range,
+// or restores originals if outside the window.
+(function applySalePricing() {
+    var saleOn = isSaleActive();
+
+    // --- Wig Frontal Install ---
+    var wigCard = document.getElementById('card-wig');
+    if (wigCard) {
+        wigCard.querySelector('.card-title').innerHTML =
+            saleOn
+                ? 'Wig Frontal Install <span class="sale-tag">50% OFF</span>'
+                : 'Wig Frontal Install';
+        wigCard.querySelector('.card-price').innerHTML =
+            saleOn
+                ? '<span class="price-original">$65</span><span class="price-sale">$32.50</span>'
+                : '<span style="color:var(--deep-pink);font-weight:700;">$65</span>';
+        wigCard.setAttribute('onclick',
+            saleOn
+                ? "selectService('Wig Frontal Install','$32.50',this)"
+                : "selectService('Wig Frontal Install','$65',this)");
+    }
+
+    // --- Loc Retwist ---
+    var locCard = document.getElementById('card-loc');
+    if (locCard) {
+        locCard.querySelector('.card-title').innerHTML =
+            saleOn
+                ? 'Loc Retwist <span class="sale-tag">50% OFF</span>'
+                : 'Loc Retwist';
+        locCard.querySelector('.card-price').innerHTML =
+            saleOn
+                ? '<span class="price-original">$50</span><span class="price-sale">$25</span>'
+                : '<span style="color:var(--deep-pink);font-weight:700;">$50</span>';
+        locCard.setAttribute('onclick',
+            saleOn
+                ? "selectService('Loc Retwist','$25',this)"
+                : "selectService('Loc Retwist','$50',this)");
+    }
+
+    // Show/hide the sale banner
+    var banner = document.getElementById('stuSaleBanner');
+    if (banner) banner.style.display = saleOn ? 'flex' : 'none';
+})();
+
+// ── STU SALE POPUP ───────────────────────────────────────────
+(function() {
+    // Only show popup if the sale is currently active AND not already seen this session
+    if (isSaleActive() && !sessionStorage.getItem('stuPopupSeen')) {
+        setTimeout(function() {
+            var overlay = document.getElementById('stuPopupOverlay');
+            if (overlay) overlay.classList.add('visible');
+        }, 3000);
+    } else {
+        var overlay = document.getElementById('stuPopupOverlay');
+        if (overlay) overlay.remove();
+    }
+})();
+
+function closePopup() {
+    var overlay = document.getElementById('stuPopupOverlay');
+    if (!overlay) return;
+    overlay.style.transition = 'opacity 0.3s ease';
+    overlay.style.opacity = '0';
+    setTimeout(function() { overlay.remove(); }, 300);
+    sessionStorage.setItem('stuPopupSeen', '1');
+}
+
+function claimOffer() {
+    closePopup();
+    setTimeout(function() {
+        var booking = document.getElementById('booking');
+        if (booking) booking.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
 }
 
 renderCalendar();
